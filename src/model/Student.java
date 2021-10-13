@@ -1,8 +1,9 @@
 package model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Student {
+
+public class Student implements Serializable {
     private String name;
     private String studentCode;
     private String dateOfBirth;

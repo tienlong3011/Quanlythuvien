@@ -13,30 +13,27 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner number = new Scanner(System.in);
+        ManagerCard managerCard = new ManagerCard();
 
-        ArrayList<Student> studentArrayList = new ArrayList<>();
-        ArrayList<Book> bookArrayList = new ArrayList<>();
-        ArrayList<Card> cardArrayList = new ArrayList<>();
+        managerCard.getStudentArrayList().add(new Student("Nguyễn Tiến Long","C1", "2000","C0821H1"));
+        managerCard.getStudentArrayList().add(new Student("Nguyễn Anh Tuấn","C2", "1997","C0821H1"));
+        managerCard.getStudentArrayList().add(new Student("Nguyễn Hoàng Duy","C3", "1991","C0821H1"));
 
-        studentArrayList.add(new Student("Nguyễn Tiến Long","C1", "2000","C0821H1"));
-        studentArrayList.add(new Student("Nguyễn Anh Tuấn","C2", "1997","C0821H1"));
-        studentArrayList.add(new Student("Nguyễn Hoàng Duy","C3", "1991","C0821H1"));
+        managerCard.getBookArrayList().add(new Book("B1","Đắc nhân tâm"));
+        managerCard.getBookArrayList().add(new Book("B2","Nhà giả kim"));
+        managerCard.getBookArrayList().add(new Book("B3","Đời thay đổi khi chúng ta thay đổi"));
+        managerCard.getBookArrayList().add(new Book("B4","Dạy Con Làm Giàu "));
+        managerCard.getBookArrayList().add(new Book("B5","Cha giàu cha nghèo"));
 
-        bookArrayList.add(new Book("B1","Đắc nhân tâm"));
-        bookArrayList.add(new Book("B2","Nhà giả kim"));
-        bookArrayList.add(new Book("B3","Đời thay đổi khi chúng ta thay đổi"));
-        bookArrayList.add(new Book("B4","Dạy Con Làm Giàu "));
-        bookArrayList.add(new Book("B5","Cha giàu cha nghèo"));
+        managerCard.getCardArrayList().add(new Card(managerCard.getStudentArrayList().get(0),managerCard.getBookArrayList().get(0),LocalDate.of(2021,10,13),LocalDate.of(2021,10,19)));
+        managerCard.getCardArrayList().add(new Card(managerCard.getStudentArrayList().get(1),managerCard.getBookArrayList().get(4),LocalDate.of(2021,10,13),LocalDate.of(2021,10,18)));
+        managerCard.getCardArrayList().add(new Card(managerCard.getStudentArrayList().get(2),managerCard.getBookArrayList().get(2),LocalDate.of(2021,10,13),LocalDate.of(2021,10,17)));
 
-        cardArrayList.add(new Card(studentArrayList.get(0),bookArrayList.get(0),LocalDate.of(2021,10,13),LocalDate.of(2021,10,19)));
-        cardArrayList.add(new Card(studentArrayList.get(1),bookArrayList.get(4),LocalDate.of(2021,10,13),LocalDate.of(2021,10,18)));
-        cardArrayList.add(new Card(studentArrayList.get(2),bookArrayList.get(2),LocalDate.of(2021,10,13),LocalDate.of(2021,10,17)));
-        ManagerCard managerCard = new ManagerCard(studentArrayList,cardArrayList,bookArrayList);
 
         int choice = -1;
 
 
-        while (choice != 0){
+        while (choice != 0) {
             System.out.println("--------Thư viện CodeGyms--------");
             System.out.println("1. Thêm sinh viên");
             System.out.println("2. Thêm sách vào thư viện");
@@ -47,7 +44,7 @@ public class Main {
             System.out.println("7. Exit");
 
             choice = number.nextInt();
-            switch (choice){
+            switch (choice) {
                 case 1:
                     managerCard.addStudent(addStudent());
                     break;
@@ -55,7 +52,7 @@ public class Main {
                     managerCard.addBook(addBook());
                     break;
                 case 3:
-                    addCard(cardArrayList, managerCard);
+                    addCard(managerCard.getCardArrayList(), managerCard);
                     break;
                 case 4:
                     searchStudent(managerCard);
@@ -81,11 +78,12 @@ public class Main {
         String codeBook = string.nextLine();
         Student student = managerCard.searchStudentByCode(codeStudent);
         Book book = managerCard.searchBookByCode(codeBook);
-        if(student != null && book != null){
-            cardArrayList.add(new Card(student,book,enterTheLoan(),enterPaymentDate()));
+        if (student != null && book != null) {
+            cardArrayList.add(new Card(student, book, enterTheLoan(), enterPaymentDate()));
         } else {
             System.out.println("Không có sinh viên. Vui lòng nhập lại!");
         }
+        managerCard.writeListBill();
     }
 
 
@@ -104,18 +102,18 @@ public class Main {
         dateOfBirth = string.nextLine();
         System.out.print("Nhập tên lớp: ");
         class1 = string.nextLine();
-        return new Student(nameStudent,codeStudent,dateOfBirth,class1);
+        return new Student(nameStudent, codeStudent, dateOfBirth, class1);
     }
 
     //Thêm sách
-    public static Book addBook(){
+    public static Book addBook() {
         Scanner string = new Scanner(System.in);
         String bookCode, bookName;
         System.out.print("Nhập mã sách: ");
         bookCode = string.nextLine();
         System.out.print("Nhập tên sách: ");
         bookName = string.nextLine();
-        return new Book(bookCode,bookName);
+        return new Book(bookCode, bookName);
     }
 
     //tìm kiếm sinh viên theo code
@@ -124,7 +122,7 @@ public class Main {
         System.out.print("Nhập code sinh viên: ");
         String code = code1.nextLine();
         Student student = managerCard.searchStudentByCode(code);
-        if(student != null){
+        if (student != null) {
             System.out.println(student);
         } else {
             System.out.println("Không có sinh viên. Vui lòng nhập lại!");
@@ -145,7 +143,7 @@ public class Main {
     }
 
     //thêm ngày trả
-   public static LocalDate enterPaymentDate() {
+    public static LocalDate enterPaymentDate() {
         System.out.print("Năm trả: ");
         Scanner number = new Scanner(System.in);
         int year = number.nextInt();

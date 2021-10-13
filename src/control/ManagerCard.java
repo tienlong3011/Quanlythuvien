@@ -4,7 +4,9 @@ import model.Book;
 import model.Card;
 import model.Student;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ManagerCard {
     ArrayList<Student> studentArrayList = new ArrayList<>();
@@ -131,5 +133,39 @@ public class ManagerCard {
         return card;
     }
 
+    public void writeListBill(){
+        File file = new File("file.txt");
+        try {
+            OutputStream inputStream = new FileOutputStream(file);
+            ObjectOutputStream ois = new ObjectOutputStream(inputStream);
+            //ghi de
+            ois.writeObject(cardArrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    //doc file
+    public void readFile() {
+
+        // tao file khi chua co
+        File file = new File("file.txt");
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+//         kiem tra xem file co du lieu khong
+        try {
+            InputStream is = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(is);
+            Scanner s = new Scanner(System.in);
+            cardArrayList = (ArrayList<Card>) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

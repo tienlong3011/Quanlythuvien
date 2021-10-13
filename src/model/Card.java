@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Card {
+public class Card implements Serializable {
     private Student student;
     private Book book;
     private LocalDate borrowedDate;
