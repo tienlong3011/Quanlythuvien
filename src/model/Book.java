@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private String bookCode;
     private String bookName;
+    private int quantity;
+
 
     public Book() {
     }
@@ -12,6 +14,12 @@ public class Book implements Serializable {
     public Book(String bookCode, String bookName) {
         this.bookCode = bookCode;
         this.bookName = bookName;
+    }
+
+    public Book(String bookCode, String bookName, int quantity) {
+        this.bookCode = bookCode;
+        this.bookName = bookName;
+        this.quantity = quantity;
     }
 
     public String getBookCode() {
@@ -29,11 +37,19 @@ public class Book implements Serializable {
     public void setBookName(String bookName) {
         this.bookName = bookName;
     }
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     @Override
     public String toString() {
         return "bookCode= " + bookCode +
-                ", bookName= " + bookName
+                ", bookName= " + bookName +
+                ", quantity= " + quantity
                 ;
     }
 }

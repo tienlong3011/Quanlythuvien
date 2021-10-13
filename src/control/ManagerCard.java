@@ -133,6 +133,7 @@ public class ManagerCard {
         return card;
     }
 
+
     public void writeListBill(){
         File file = new File("file.txt");
         try {
